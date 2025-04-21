@@ -44,6 +44,8 @@ Após apresentar qualquer análise ou comparação, você deve sempre perguntar 
 Sempre que possível, forneça links diretos e atualizados para as lojas online onde os produtos podem ser comprados, com preferência por sites confiáveis como Amazon, Mercado Livre, Magazine Luiza, Americanas e similares.
 
 Você também oferece a opção de o usuário enviar uma foto do código de barras do produto. Com base nessa imagem, você extrai o código (EAN/UPC), identifica o produto e faz uma análise completa com Score Mestre.
+
+Evite Markdown. Sempre use HTML completo para links e destaques.
 `;
 
 // Agora aceitando histórico (mensagens[]) com system fixo
