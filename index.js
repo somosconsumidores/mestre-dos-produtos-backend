@@ -1,36 +1,27 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import { askGPT } from "./openai.js";
-
-dotenv.config();
+import express from 'express';
+import cors from 'cors';
+import { askGPT } from './openai.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(cors());
 app.use(express.json());
 
-app.post("/chat", async (req, res) => {
-  const { question } = req.body;
+app.post('/chat', async (req, res) => {
+  const { messages } = req.body;
 
-  if (!question) {
-    return res.status(400).json({ error: "Pergunta não fornecida." });
+  if (!messages || !Array.isArray(messages)) {
+    return res.status(400).json({ error: 'Histórico inválido' });
   }
 
   try {
-    const response = await askGPT(question);
-    res.json({ response });
+    const resposta = await askGPT(messages);
+    res.json({ response: resposta });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Erro ao consultar o Mestre dos Produtos." });
+    console.error('Erro ao consultar OpenAI:', err);
+    res.status(500).json({ error: 'Erro ao gerar resposta' });
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("API do Mestre dos Produtos está online!");
-});
-
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Servidor do Mestre dos Produtos rodando...");
 });
